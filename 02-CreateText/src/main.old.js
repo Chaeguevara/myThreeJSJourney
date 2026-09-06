@@ -1,11 +1,8 @@
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import {
-  CSS2DRenderer,
-  CSS2DObject,
-} from "three/examples/jsm/renderers/CSS2DRenderer.js";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 // 1. Scene Setup
 const scene = new THREE.Scene();
@@ -13,15 +10,15 @@ scene.background = new THREE.Color(0x111827);
 
 // 2. Camera Setup
 const camera = new THREE.PerspectiveCamera(
-  60,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000,
+    60,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
 );
 camera.position.set(0, 2, 9);
 
 // 3. WebGL Renderer Setup
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
@@ -34,7 +31,6 @@ labelRenderer.domElement.style.top = '0px';
 labelRenderer.domElement.style.pointerEvents = 'none';
 document.body.appendChild(labelRenderer.domElement);
 
-
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -43,10 +39,14 @@ controls.enableDamping = true;
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
 scene.add(ambientLight);
 
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+directionalLight.position.set(5, 8, 5);
+scene.add(directionalLight);
+
 // --- Method 2: CSS2DRenderer (DOM Label in 3D space) ---
-const div = document.createElement('div')
-div.className = 'label'
-div.textContent = 'Method 2: CSS2D Earth'
+const div = document.createElement('div');
+div.className = 'label';
+div.textContent = 'Method 2: CSS2D Earth';
 div.style.color = '#38bdf8';
 div.style.fontFamily = 'system-ui, sans-serif';
 div.style.padding = '6px 12px';
@@ -57,16 +57,12 @@ div.style.fontSize = '14px';
 div.style.fontWeight = '600';
 div.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
 
-const label = new CSS2DObject(div)
-label.position.set(-5.5, 1.8, 0)
-scene.add(label)
-
+const label = new CSS2DObject(div);
+label.position.set(-5.5, 1.8, 0);
+scene.add(label);
 
 const sphereGeo = new THREE.SphereGeometry(0.6, 32, 32);
-const sphereMat = new THREE.MeshStandardMaterial({
-  color: 0x38bdf8,
-  roughness: 0.4,
-});
+const sphereMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.4 });
 const sphere = new THREE.Mesh(sphereGeo, sphereMat);
 sphere.position.set(-5.5, 0.6, 0);
 scene.add(sphere);
@@ -74,22 +70,21 @@ scene.add(sphere);
 // --- Method 3: TextGeometry (3D Geometric Mesh Text) ---
 const loader = new FontLoader();
 loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
-  const geometry = new TextGeometry('Method 3 : 3D Text', {
-    font: font,
-    size: 0.55,
-    // height: 0.1,
-    depth: 0.1,
-    curveSegments: 12,
-    bevelEnabled: true,
-    bevelThickness: 0.02,
-    bevelSize: 0.02,
-    bevelSegments: 5
-  });
-  geometry.center();
-  const material = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.2, metalness: 0.3 });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(0, 0.1, 0);
-  scene.add(mesh);
+    const geometry = new TextGeometry('Method 3: 3D Text', {
+        font: font,
+        size: 0.55,
+        height: 0.01,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.02,
+        bevelSize: 0.02,
+        bevelSegments: 5
+    });
+    geometry.center();
+    const material = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.2, metalness: 0.3 });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, 0.1, 0);
+    scene.add(mesh);
 });
 
 // --- Method 4: Canvas 2D Texture Mapping ---
@@ -122,25 +117,25 @@ const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, 
 const canvasMesh = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 1.6), material);
 canvasMesh.position.set(5.5, 0.6, 0);
 scene.add(canvasMesh);
+
 // Grid Helper
 const gridHelper = new THREE.GridHelper(20, 20, 0x475569, 0x334155);
 gridHelper.position.y = -0.5;
 scene.add(gridHelper);
 
 // Handle Window Resize
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  labelRenderer.setSize(window.innerWidth, window.innerHeight);
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
 });
 
 // Animation Loop
 function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
-  labelRenderer.render(scene, camera);
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+    labelRenderer.render(scene, camera);
 }
-
 animate();
