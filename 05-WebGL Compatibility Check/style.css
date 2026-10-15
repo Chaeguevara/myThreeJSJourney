@@ -1,0 +1,218 @@
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --text-main: #f0f3f6;
+  --text-muted: #9aa0a6;
+  --accent-green: #00ff88;
+  --accent-red: #ff4757;
+  --accent-yellow: #ffa502;
+  --bg-dark: #0d0f14;
+  --surface-dark: rgba(18, 20, 26, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+#container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Header Overlay */
+.app-overlay {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 22px;
+  background: var(--surface-dark);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 20;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.badge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--accent-green);
+  background: rgba(0, 255, 136, 0.12);
+  border: 1px solid rgba(0, 255, 136, 0.28);
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.app-overlay h1 {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.app-overlay .desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Diagnostics Card */
+.diagnostics-card {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 380px;
+  max-width: calc(100vw - 48px);
+  padding: 16px 20px;
+  background: var(--surface-dark);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  z-index: 20;
+  font-size: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.diag-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  box-shadow: 0 0 10px var(--accent-green);
+  transition: all 0.3s ease;
+}
+
+.status-indicator.error {
+  background-color: var(--accent-red);
+  box-shadow: 0 0 10px var(--accent-red);
+}
+
+.diag-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: 0.2px;
+}
+
+.diag-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diag-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.diag-label {
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+
+.diag-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  color: #e2e8f0;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-accent {
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+.text-error {
+  color: var(--accent-red);
+  font-weight: 600;
+}
+
+/* Three.js Standard Error Message Modernization & Fallback UI */
+#webglmessage {
+  position: relative !important;
+  margin: 0 !important;
+  background: rgba(30, 20, 25, 0.95) !important;
+  color: #ff9999 !important;
+  border: 1px solid rgba(255, 71, 87, 0.4) !important;
+  border-radius: 12px !important;
+  padding: 24px 32px !important;
+  max-width: 520px !important;
+  width: 90% !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6) !important;
+  text-align: center !important;
+  line-height: 1.6 !important;
+  font-family: var(--font-family) !important;
+  font-size: 14px !important;
+  z-index: 30;
+}
+
+#webglmessage a {
+  color: #ff6b81 !important;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.fallback-troubleshoot {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  color: #bbb;
+  text-align: left;
+}
+
+.fallback-troubleshoot ul {
+  margin-top: 8px;
+  padding-left: 20px;
+}
+
+.fallback-troubleshoot li {
+  margin-bottom: 4px;
+}

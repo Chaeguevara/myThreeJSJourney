@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js - WebGL 2 Compatibility Check</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- App Header & Mentoring Overlay -->
+    <header class="app-overlay">
+      <div class="badge">Three.js Journey · Chapter 05</div>
+      <h1>WebGL 2 Compatibility Guard</h1>
+      <p class="desc">Pre-flight Validation, Fail-Safe Architecture &amp; Graceful Degradation</p>
+    </header>
+
+    <!-- Diagnostics Card (Hardware & Context Probe) -->
+    <div id="diagnostics-card" class="diagnostics-card">
+      <div class="diag-header">
+        <span class="status-indicator" id="status-dot"></span>
+        <span class="diag-title">GPU &amp; Context Diagnostics</span>
+      </div>
+      <div class="diag-body" id="diag-body">
+        <div class="diag-row">
+          <span class="diag-label">WebGL 2 Status:</span>
+          <span class="diag-value" id="diag-webgl2">검사 중...</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Renderer / GPU:</span>
+          <span class="diag-value" id="diag-gpu">탐색 중...</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Guard Execution:</span>
+          <span class="diag-value text-accent" id="diag-guard">Pre-flight Active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Mounting Container (Three.js Canvas or Warning Banner) -->
+    <div id="container"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

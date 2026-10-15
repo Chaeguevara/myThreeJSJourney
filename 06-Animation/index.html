@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js - Animation System</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-overlay">
+      <div class="spinner"></div>
+      <p style="color: #9aa0a6; font-size: 14px;">Loading 3D Model &amp; Skeletal Animations...</p>
+    </div>
+
+    <!-- Minimal Header HUD -->
+    <header class="app-overlay">
+      <div class="badge">Architecture Pattern</div>
+      <h1>06. Three.js Animation System</h1>
+      <p class="desc">
+        Clip (Data) &rarr; Mixer (Player) &rarr; Action (Controller) 구조로 분리된 상태 기반 애니메이션 아키텍처.
+      </p>
+      <div class="flow-pills">
+        <span>Clip</span>
+        <span class="arrow">&rarr;</span>
+        <span>Mixer</span>
+        <span class="arrow">&rarr;</span>
+        <span>Action</span>
+        <span class="arrow">&rarr;</span>
+        <span>Update(&Delta;t)</span>
+      </div>
+    </header>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

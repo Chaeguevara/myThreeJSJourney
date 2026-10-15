@@ -1,0 +1,54 @@
+@baseUrl = https://aps-codepen.autodesk.io
+
+### 1. GET Token
+# @name getToken
+GET {{baseUrl}}/api/token HTTP/1.1
+
+/*
+Expected JSON Response:
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IlZiakZvUzhQU3lYODQyMV95dndvRUdRdFJEa19SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ...",
+  "token_type": "Bearer",
+  "expires_in": 3599,
+  "expires_at": 1790432280245
+}
+*/
+
+### Store token into variable
+@accessToken = {{getToken.response.body.access_token}}
+
+### 2. List Models (No Auth required)
+# @name listModels
+GET {{baseUrl}}/api/models HTTP/1.1
+
+/*
+Expected JSON Response:
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "name": "05_spaceship.f3d",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YXBzLWNvZGVwZW4tYmFja2VuZC8wNV9zcGFjZXNoaXAuZjNk"
+  },
+  {
+    "name": "03_drive_roller_assembly.dwg",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YXBzLWNvZGVwZW4tYmFja2VuZC8wM19kcml2ZV9yb2xsZXJfYXNzZW1ibHkuZHdn"
+  },
+  {
+    "name": "02_jet_engine_model.zip",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YXBzLWNvZGVwZW4tYmFja2VuZC8wMl9qZXRfZW5naW5lX21vZGVsLnppcA"
+  },
+  {
+    "name": "04_bike_frame.f3d",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YXBzLWNvZGVwZW4tYmFja2VuZC8wNF9iaWtlX2ZyYW1lLmYzZA"
+  },
+  {
+    "name": "01_rac_basic_sample_project.rvt",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YXBzLWNvZGVwZW4tYmFja2VuZC8wMV9yYWNfYmFzaWNfc2FtcGxlX3Byb2plY3QucnZ0"
+  }
+]
+*/
